@@ -1,0 +1,32 @@
+First, create a structure that can read and save files and store return values.
+
+typedef struct s_buffer
+{
+char *buf;
+size_t pos;
+size_t size;
+} t_buffer;
+
+typedef t_buffer t_line_buffer;
+typedef t_buffer t_read_buffer;
+
+Declare a static structure that reads and stores files.
+
+static t_read_buffer rb[OPEN_MAX];
+
+Create a structure to return after storing the read char until a ‘\n’ character appears.
+
+t_line_buffer lb;
+
+read(fd, buf, BUFFER_SIZE); to read as many lines as the buffer. Then, it is stored in the buf of the read buffer.
+
+read(fd, buf, BUFFER_SIZE);
+// fd = file descriptor
+// buf = buffer from which to read the file
+// BUFFER_SIZE = size of buffer
+// return value = number of bytes received, -1 in case of failure
+
+Check if there is a newline character in buf of the read buffer one character at a time.
+If there is no newline character, one character read is put into the line buffer. If there is a newline character or end of file, it stops writing to the line buffer and stops the process.
+If a file with a length greater than BUFFER_SIZE is received, read again, overwrite the read buffer, and continue the above process.
+When the function is called again, it starts again from the place saved by the static variable rb.
