@@ -52,25 +52,26 @@ char	*alloc_read_buffer(t_buffer *rb)
 	//rb->buf = read_c(rb, fd);
 	return (rb->buf);
 }
-char *realloc_line(t_line_buffer *rl)
-{
-	char *new_buf;
-	int new_size;
 
-	new_size = rl->size + 2;
-	new_buf = malloc(sizeof(char) * new_size);
-	if (rl->buf)
+char	*realloc_line_buffer(t_line_buffer	*plb)
+{
+	char	*new_buf;
+	size_t	new_size;
+
+	new_size = plb->size + BUFFER_SIZE;
+	new_buf = malloc(sizeof(char) * (new_size + 1));
+	if (plb->buf != NULL)
 	{
-		if (new_buf)
-			ft_memcpy(new_buf, rl->buf, rl->size);
-		free(rl->buf);
+		if (new_buf != NULL)
+			ft_memcpy(new_buf, plb->buf, plb->size);
+		free(plb->buf);
 	}
-	rl->buf = new_buf;
-	rl->size = new_size;
+	plb->buf = new_buf;
+	plb->size = new_size;
 	return (new_buf);
 }
 
-int	put_line(t_line_buffer *pl, char *s)
+/*int	put_line(t_line_buffer *pl, char *s)
 {
 	if (pl->pos >= pl->size)
 		realloc_line(pl);
@@ -81,46 +82,69 @@ int	put_line(t_line_buffer *pl, char *s)
 		if(s[i] == '\n')
 			return 0;;
 	return 1;
+}*/
+
+int	put_line(t_line_buffer *plb, char s)
+{
+	if (plb->pos >= plb->size)
+	{
+		if (realloc_line_buffer(plb) == NULL)
+			return (0);
+	}
+	//plb->pos++;
+	plb->buf[plb->pos++] = s;
+	//plb->buf = s;
+	//int i = 0;
+	//while (s[i++])
+	if (s == '\n')
+		return (0);
+	return (1);
 }
 
-char	*save_line(t_line_buffer *sl, char *s)
-{
-	int i = 0;
-	while (s[i++])
-		sl->buf[i] = s[i];
-	return (sl->buf);
-}
+// char	*save_line(t_line_buffer *sl, char *s)
+// {
+// 	int i = 0;
+// 	while (s[i++])
+// 		sl->buf[i] = s[i];
+// 	return (sl->buf);
+// }
+
 char *gnl(int fd)
 {
-	t_line_buffer *line;
+	t_line_buffer line;
 	char *hold;
 	static t_read_buffer stc[BUFFER_SIZE];
-	line = malloc(sizeof(t_buffer));
+//	line = malloc(sizeof(t_buffer));
 	alloc_read_buffer(stc);
-	line->buf = 0;
-	line->size =0;
-	line->pos = 0;
-	while(1)
+	line.buf = 0;
+	line.size =0;
+	line.pos = 0;
+	int i = 0;
+	hold = read_c(stc, fd);
+	while (1)
 	{
-		hold = read_c(stc, fd);
-		if (hold == 0)
+		//hold = read_c(&stc[fd], fd);
+		//if (hold == 0)
+		//	break ;
+		if (put_line(&line, hold[i++]) == 0)
 			break ;
-		if (put_line(line, hold) == 0)
-			break ;
+			//else
+				//put_line(&line, hold[i]);
 	}
-	if (line->pos == 0)
+	if (line.pos == 0)
 		free_read(stc);
 	else
-		line->buf = 0;
-	return(line->buf);
+		line.buf[line.pos] = 0;
+	return(line.buf);
 }
 
 int main(void)
 {
 	int fd = open("file", O_RDONLY);
-	t_buffer *s;
-	s = malloc(sizeof(t_buffer));
+	//t_buffer *s;
+	//s = malloc(sizeof(t_buffer));
 	printf("%s", gnl(fd));
+	//printf("%s", gnl(fd));
 	return 0;
 }
 
