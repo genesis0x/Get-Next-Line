@@ -6,7 +6,7 @@
 /*   By: hahadiou <hahadiou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 21:41:50 by hahadiou          #+#    #+#             */
-/*   Updated: 2022/11/09 17:03:28 by hahadiou         ###   ########.fr       */
+/*   Updated: 2022/11/03 14:57:50 by hahadiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,13 @@
 
 # include <stdlib.h>
 # include <unistd.h>
-# include <fcntl.h>
-# include <string.h>
-# include <stdio.h>
-# include <limits.h>
+
+# ifdef BUFFER_SIZE
+#  if BUFFER_SIZE < 0
+#   undef BUFFER_SIZE
+#   define BUFFER_SIZE 0
+#  endif
+# endif
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 10

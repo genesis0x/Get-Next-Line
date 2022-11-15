@@ -6,11 +6,12 @@
 /*   By: hahadiou <hahadiou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 21:41:47 by hahadiou          #+#    #+#             */
-/*   Updated: 2022/11/09 17:13:04 by hahadiou         ###   ########.fr       */
+/*   Updated: 2022/11/09 15:53:59 by hahadiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <string.h>
 
 static char	*realloc_line_buffer(t_line_buffer *pl)
 {
@@ -18,7 +19,7 @@ static char	*realloc_line_buffer(t_line_buffer *pl)
 	size_t	new_size;
 
 	new_size = pl->size + 1;
-	new_buf = malloc(sizeof(char) * (new_size + 1));
+	new_buf = malloc((new_size + 1) * sizeof(char));
 	if (pl->buf)
 	{
 		if (new_buf)
@@ -34,7 +35,7 @@ static char	*alloc_read_buffer(t_read_buffer *pb)
 {
 	if (pb->buf == 0)
 	{
-		pb->buf = malloc(sizeof(char) * BUFFER_SIZE);
+		pb->buf = malloc(BUFFER_SIZE * sizeof(char));
 		if (pb->buf == 0)
 			return (0);
 		pb->pos = 0;
@@ -94,10 +95,4 @@ char	*get_next_line(int fd)
 	else
 		line.buf[line.pos] = 0;
 	return (line.buf);
-}
-
-int main(void) {
-    int fd = open("../../file", O_RDONLY);
-    printf("%s", get_next_line(fd));
-    return 0;
 }

@@ -6,7 +6,7 @@
 /*   By: hahadiou <hahadiou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 21:41:47 by hahadiou          #+#    #+#             */
-/*   Updated: 2022/11/09 16:55:57 by hahadiou         ###   ########.fr       */
+/*   Updated: 2022/11/03 14:57:32 by hahadiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ char	*get_next_line(int fd)
 	t_line_buffer			line;
 	static t_read_buffer	rb[OPEN_MAX];
 
-	if (fd < 0 || fd == 1 || fd == 2 || read(fd, line.buf, 0) < 0)
+	if (fd < 0 || fd == 1 || fd == 2
+		|| BUFFER_SIZE <= 0 || read(fd, line.buf, 0) < 0)
 		return (0);
 	if (alloc_read_buffer(&rb[fd]) == 0)
 		return (0);

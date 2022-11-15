@@ -6,7 +6,7 @@
 /*   By: hahadiou <hahadiou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 14:56:47 by hahadiou          #+#    #+#             */
-/*   Updated: 2022/11/09 17:01:43 by hahadiou         ###   ########.fr       */
+/*   Updated: 2022/11/08 16:13:55 by hahadiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,13 @@
 
 # include <stdlib.h>
 # include <unistd.h>
-# include <fcntl.h>
-# include <string.h>
-# include <stdio.h>
-# include <limits.h>
+
+# ifdef BUFFER_SIZE
+#  if BUFFER_SIZE < 0
+#   undef BUFFER_SIZE
+#   define BUFFER_SIZE 0
+#  endif
+# endif
 
 # ifndef OPEN_MAX
 #  define OPEN_MAX 10240
