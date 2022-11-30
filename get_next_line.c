@@ -31,21 +31,10 @@ static char	*realloc_line_buffer(t_line_buffer *pl)
 	return (new_buf);
 }
 
-static char	*alloc_read_buffer(t_read_buffer *pb)
-{
-	if (pb->buf == 0)
-	{
-		pb->buf = malloc(BUFFER_SIZE * sizeof(char));
-		if (pb->buf == 0)
-			return (0);
-		pb->pos = 0;
-		pb->size = 0;
-	}
-	return (pb->buf);
-}
-
 static int	read_file(int fd, t_read_buffer *rb)
 {
+    if (!rb->buf)
+        rb->buf = malloc(BUFFER_SIZE);
 	if (rb->pos >= rb->size)
 	{
 		rb->size = read(fd, rb->buf, BUFFER_SIZE);
@@ -75,9 +64,7 @@ char	*get_next_line(int fd)
 	t_line_buffer			line;
 	static t_read_buffer	rb;
 
-	if (fd < 0 || fd == 1 || fd == 2 || read(fd, line.buf, 0) < 0)
-		return (0);
-	if (!(alloc_read_buffer(&rb)))
+	if (fd < 0  read(fd, line.buf, 0) < 0)
 		return (0);
 	line.buf = 0;
 	line.pos = 0;
