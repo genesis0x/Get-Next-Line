@@ -6,7 +6,7 @@
 /*   By: hahadiou <hahadiou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 21:41:44 by hahadiou          #+#    #+#             */
-/*   Updated: 2022/11/03 13:20:24 by hahadiou         ###   ########.fr       */
+/*   Updated: 2022/12/01 11:19:15 by hahadiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	*ft_memcpy(void *dst, const void *src, size_t n)
 	return (dst);
 }
 
-void	free_read_buffer(t_read_buffer *prb)
+void	free_buffer(t_read_buffer *prb)
 {
 	if (prb->buf != 0)
 	{

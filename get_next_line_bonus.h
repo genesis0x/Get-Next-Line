@@ -6,7 +6,7 @@
 /*   By: hahadiou <hahadiou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 14:56:47 by hahadiou          #+#    #+#             */
-/*   Updated: 2022/11/08 16:13:55 by hahadiou         ###   ########.fr       */
+/*   Updated: 2022/12/01 11:19:29 by hahadiou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,6 @@ typedef t_buffer	t_read_buffer;
 
 char	*get_next_line(int fd);
 void	*ft_memcpy(void	*dst, const void	*src, size_t	n);
-void	free_read_buffer(t_read_buffer *prb);
+void	free_buffer(t_read_buffer *prb);
 
 #endif
