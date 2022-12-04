@@ -34,11 +34,11 @@ typedef struct s_buffer
 	size_t	size;
 }	t_buffer;
 
-typedef t_buffer	t_line_buffer;
-typedef t_buffer	t_read_buffer;
+typedef t_buffer	t_line;
+typedef t_buffer	t_read;
 
 char	*get_next_line(int fd);
 void	*ft_memcpy(void	*dst, const void	*src, size_t	n);
-void	free_buffer(t_read_buffer *prb);
+void	free_buffer(t_read *prb);
 
 #endif

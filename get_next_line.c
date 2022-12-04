@@ -12,7 +12,7 @@
 
 #include "get_next_line.h"
 
-static char	*ft_realloc(t_line_buffer *line)
+static char	*ft_realloc(t_line *line)
 {
 	char	*new_buf;
 	size_t	new_size;
@@ -30,7 +30,7 @@ static char	*ft_realloc(t_line_buffer *line)
 	return (new_buf);
 }
 
-static int	read_file(int fd, t_read_buffer *reserve)
+static int	read_file(int fd, t_read *reserve)
 {
 	if (!reserve->buf)
 		reserve->buf = malloc(BUFFER_SIZE);
@@ -44,11 +44,11 @@ static int	read_file(int fd, t_read_buffer *reserve)
 	return (reserve->buf[reserve->pos++]);
 }
 
-static int	put_line(t_line_buffer *line, char c)
+static int	put_line(t_line *line, char c)
 {
 	if (line->pos >= line->size)
 	{
-		if (ft_realloc(line) == 0)
+		if (ft_realloc(line) == NULL)
 			return (0);
 	}
 	line->buf[line->pos++] = c;
@@ -59,9 +59,9 @@ static int	put_line(t_line_buffer *line, char c)
 
 char	*get_next_line(int fd)
 {
-	int						c;
-	t_line_buffer			line;
-	static t_read_buffer	reserve;
+	int				c;
+	t_line			line;
+	static t_read	reserve;
 
 	if (fd < 0 || read(fd, line.buf, 0) < 0)
 		return (0);

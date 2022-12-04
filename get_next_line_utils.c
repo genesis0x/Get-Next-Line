@@ -26,7 +26,7 @@ void	*ft_memcpy(void *dst, const void *src, size_t n)
 	return (dst);
 }
 
-void	free_buffer(t_read_buffer *prb)
+void	free_buffer(t_read *prb)
 {
 	if (prb->buf != NULL)
 	{
